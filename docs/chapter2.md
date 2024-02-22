@@ -3,19 +3,19 @@
 
 “If a tree falls in the forest and no one is around to hear it, does it make a sound?”
 
-> “如果一棵树倒在森林中，没有一个人去其周围听到这个声音，那么它发出过声音么？”
+> “如果一棵树倒在森林中，而周围没有人在场，那么它发出过声音么？”
 
 The above quote questions the relevance of unobserved events —if nobody hears the tree fall, whether it made a sound or not is of no conse- quence. Similarly, in the blockchain, if only two participants care about an everyday recurring transaction, it’s not necessary for all other nodes in the bitcoin network to know about that transaction. It is instead preferable to only have the bare minimum of information on the blockchain. By defer- ring telling the entire world about every transaction, doing net settlement of their relationship at a later date enables Bitcoin users to conduct many transactions without bloating up the blockchain or creating trust in a cen- tralized counterparty. An effectively trustless structure can be achieved by using time locks as a component to global consensus.
 
-> 上面的引文质疑了未观察到的事件的相关性--如果没有人听到树倒了，它是否发出了声音是没有意义的。类似的，在区块链中，如果只有两个参与者关心他们每天的日常交易，那么并没有必要广播到比特币全网让所有节点了解这些交易。相反，在区块链上只留下一小段信息的方法是更可取的。不必着急把每一笔交易告诉全世界，而是在晚些时候对他们的账目进行清算，这使得比特币用户可以进行大量交易，而不会使区块链膨胀，也不用去信任一个集中化的资金托管方。通过使用时间锁作为全局共识的组成部分，可以实现有效的无需信任的交易机制。
+> 上面的引文质疑了未观察到的事件的相关性--如果没有人听到树倒了，它是否发出了声音是没有意义的。类似的，在区块链中，如果只有两个参与者关心他们每天的日常交易，那么并没有必要广播到比特币全网让所有节点了解这些交易。相反，在区块链上只留下一小段信息的方法是更可取的。不必着急把每一笔交易告诉全世界，而是在晚些时候对他们的账目进行清算，这样就可以在不增加区块链负担或依赖中心化对手方的情况下，执行多笔交易。利用时间锁作为全球共识机制的一部分，可以建立一个有效的无需信任的结构。
 
 Currently the solution to micropayments and scalability is to offload the transactions to a custodian, whereby one is trusting third party custodi- ans to hold one’s coins and to update balances with other parties. Trusting third parties to hold all of one’s funds creates counterparty risk and trans- action costs.
 
-> 目前，微支付和可扩展性的解决方案是把交易转移到托管人那里，即委托第三方保管自己的资金并维护其账目变化。而信任托管资金的第三方会产生交易对手风险和交易成本。
+> 目前，微支付和可扩展性的解决方案是把交易转移到托管人那里，即委托第三方保管自己的资金并维护其账目变化。然而，将所有资金完全托付给第三方会带来对手方风险和交易成本。
 
 Instead, using a network of these micropayment channels, Bitcoin can scale to billions of transactions per day with the computational power available on a modern desktop computer today. Sending many payments inside a given micropayment channel enables one to send large amounts of funds to another party in a decentralized manner. These channels are not a separate trusted network on top of bitcoin. They are real bitcoin transactions.
 
-> 相反，通过使用微支付通道网络，比特币可以扩容到每天数十亿笔交易，这一切用一台现在主流配置的电脑就可以做到。在指定的微支付通道中，可以以去中心化的方式通过多次交易向另一方发送大量资金。这些通道并不是建立在比特币之上的独立可信网络，这些交易是真正的比特币交易。
+> 另一种方式是，通过建立微支付通道的网络，比特币可以在目前桌面电脑的计算能力范围内，每天处理高达数十亿笔交易。通过在特定的微支付通道中进行多次支付，可以实现向对方去中心化地转移大额资金。这些微支付通道并不是建立在比特币之上的另一个独立的可信网络，而是构成了真实的比特币交易的一部分。
 
 Micropayment channels[3][4] create a relationship between two par- ties to perpetually update balances, deferring what is broadcast to the blockchain in a single transaction netting out the total balance between those two parties. This permits the financial relationships between two par- ties to be trustlessly deferred to a later date, without risk of counterparty default. Micropayment channels use real bitcoin transactions, only electing to defer the broadcast to the blockchain in such a way that both parties can guarantee their current balance on the blockchain; this is not a trusted overlay network —payments in micropayment channels are real bitcoin com- municated and exchanged off-chain.
 
