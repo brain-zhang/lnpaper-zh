@@ -38,20 +38,19 @@ Instead, both parties can commit to signing a transaction and not broadcasting t
 
 To update the balance, both parties create a new spend from the 2-of-2 multisignature address, for example 0.07 to Alice and 0.03 to Bob. Without proper design, though, there is the timestamping problem of not knowing which spend is correct: the new spend or the original refund.
 
-> 为了更新账户余额，双方从这个2/2多重签名地址创建一个新的赎回交易，比如支付给Alice0.07BTC，Bob 0.03BTC。然后，如果没有适当的设计，就会出现时间戳问题：不知道哪一笔交易才是正确的，是新的赎回交易(Alice0.07BTC, Bob0.03BTC)，还是之前的赎回交易(Alice0.05BTC, Bob0.05BTC)
+> 为了更新账户余额，双方从这个2/2多重签名地址创建一个新的赎回交易，比如支付给Alice0.07BTC，Bob 0.03BTC。然而，如果没有适当的设计，就会出现问题：不知道哪一笔交易才是正确的，是新的赎回交易(Alice0.07BTC, Bob0.03BTC)，还是之前的赎回交易(Alice0.05BTC, Bob0.05BTC)。这就是所谓的时间戳问题，它涉及到如何准确确定交易的顺序和有效性。
 
 The restriction on timestamping and dates, however, is not as com- plex as full ordering of all transactions as in the bitcoin blockchain. In the case of micropayment channels, only two states are required: the current correct balance, and any old deprecated balances. There would only be a single correct current balance, and possibly many old balances which are deprecated.
 
-> 但是，对时间戳以及日期的限制并不需要像比特币区块链上那样复杂和有序。在微支付通道中，只有两个状态是必须的：当前的账户余额状态，以及任何旧的弃用账户余额状态。当前时间点，只有一个正确的余额状态，可能还有许多废弃的旧余额状态。
+> 但是，对时间戳以及日期的限制并不需要像比特币区块链上那样复杂和有序。在微支付通道中，只有两个状态是必须的：当前的账户余额状态，以及任何旧的弃用账户余额状态。在任一时间点，只能有一个正确的余额状态，但是可能还有许多废弃的旧余额状态。
 
 Therefore, it is possible in bitcoin to devise a bitcoin script whereby all old transactions are invalidated, and only the new transaction is valid. Invalidation is enforced by a bitcoin output script and dependent trans- actions which force the other party to give all their funds to the channel counterparty. By taking all funds as a penalty to give to the other, all old transactions are thereby invalidated.
 
-> 因此，在比特币系统中可以设计一个脚本，所有的旧的交易都是无效的，只有最近的当前交易才是有效的。可以这样做来废弃旧的交易：创造一个花费通道中比特币的脚本，当一方作弊时，作为惩罚，会把通道中所有的资金都给另一方。通过这种强制分配资金的惩罚方法，来废弃所有的旧交易。
+> 因此，在比特币系统中可以设计一个脚本，使所有旧交易无效，而只有最近的当前交易才是有效的。可以采用下面的办法来废弃旧的交易：创造一个花费通道中比特币的脚本，当一方作弊时，作为惩罚，会把通道中所有的资金都给另一方。通过这种强制分配资金的惩罚方法，来废弃所有的旧交易。
 
 This invalidation process can exist through a process of channel con- sensus where if both parties agree on current ledger states (and building new states), then the real balance gets updated. The balance is reflected on the blockchain only when a single party disagrees. Conceptually, this system is not an independent overlay network; it is more a deferral of state on the current system, as the enforcement is still occurring on the blockchain itself (albeit deferred to future dates and transactions).
 
-> 这个作废旧有交易的过程通过通道双方的共识来保证：当账户余额发生变化时，双方都同意当前的账本状态(并且每次更新账本时都能达成新的共识)。只有当一方不同意当前状态时，交易才会广播上链解决纠纷。从概念上讲，该系统不是一个独立的叠加网络，它更像是当前系统的延迟状态，因为最终账户余额会广播到区块链上去(尽管这个过程和相关交易广播会推迟到未来某个时间)。
-
+> 这个作废旧有交易的过程通过通道双方的共识来保证：当账户余额发生变化时，双方都同意当前的账本状态(并且每次更新账本时都能达成新的共识)。只有当一方不同意当前状态时，交易才会广播上链解决纠纷。从概念上讲，该系统不是一个独立的叠加网络，它更像是当前系统的延迟状态，因为最终账户余额还需要广播到区块链上去(尽管这个过程和相关交易广播会推迟到未来某个时间)。
 
 ## 2.2 A Network of Channels 
 ## 2.2 支付通道网络
@@ -62,8 +61,8 @@ Thus, micropayment channels only create a relationship between two parties. Requ
 
 If we presume a large network of channels on the Bitcoin blockchain, and all Bitcoin users are participating on this graph by having at least one channel open on the Bitcoin blockchain, it is possible to create a near-infinite amount of transactions inside this network. The only transactions that are broadcasted on the Bitcoin blockchain prematurely are with uncooperative channel counterparties.
 
-> 如果我们假设比特币区块链上有一个巨大的支付通道网络，并且所有的比特币用户都至少通过在比特币区块链上一个开放的通道参与到这个网络中，那么这个网络就会承载近乎无限的交易。只有给那些没有支付通道的用户发送比特币时，才需要链上广播。
+> 如果我们假设比特币区块链上有一个巨大的支付通道网络，并且所有比特币用户都通过在比特币区块链上开设至少一个通道来参与这个网络，那么这个网络就会承载近乎无限的交易。只有给那些没有支付通道的用户发送比特币时，才需要链上广播。
 
 By encumbering the Bitcoin transaction outputs with a hashlock and timelock, the channel counterparty will be unable to outright steal funds and Bitcoins can be exchanged without outright counterparty theft. Fur- ther, by using staggered timeouts, it’s possible to send funds via multiple intermediaries in a network without the risk of intermediary theft of funds.
 
-> 通过用哈希锁(hashlock)以及时间锁(timelock)延迟广播比特币交易输出，通道的参与方将无法直接窃取资金，而比特币可以在这种保证下直接进行交易。此外，通过设定不同的超时限制，资金就可以通过网络中的多个中介节点发送，而不会有被盗窃的风险。
+> 通过在比特币交易输出上设置哈希锁(hashlock)和时间锁(timelock)，我们可以防止通道对方直接盗取资金，从而安全地进行比特币的交易。此外，通过设置分阶段的超时机制，我们可以通过网络中的多个中间方安全地转移资金，而无需担心这些中间方会盗取这些资金。这种机制确保了即使资金通过多个环节转移，每个环节也受到严格的时间和哈希条件限制，从而大大降低了盗窃的风险。
