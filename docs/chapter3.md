@@ -168,7 +168,7 @@ To be able to actually enforce the terms of the contract, it’s necessary to co
 
 Mark Freidenbach has proposed that Sequence Numbers can be en- forcible via a relative block maturity of the parent transaction via a soft-fork[12].  This would allow some basic ability to ensure some form   of relative block confirmation time lock on the spending script. In addition, an additional opcode, OP CHECKSEQUENCEVERIFY[13] (a.k.a.  OP RELATIVECHECKLOCKTIMEVERIFY)[14], would permit further abilities, including allowing a stop-gap solution before a more permanent solution for resolving transaction malleability. A future version of this paper will include proposed solutions.
 
-> Mark Freidenbach提出，通过软分叉[12]，可以设置一个序列数字，只有父交易的区块确认数达到序列数的要求后，交易才能生效。这将允许支出脚本实现一些基本的功能，可以在区块达到一定确认数目之后才会执行。另外，还可以增加一个操作码，OP_CHECKSEQUENCEVERIFY[13] (或者命名为OP_RELATIVECHECKLOCKTIMEVERIFY)[14]，它将允许更多的功能，包括在完全解决交易延展性问题的方案实行之前先实行一个临时解决方案。本文将来会持续更新建议的解决方案。
+> Mark Freidenbach提出了一种方法，通过软分叉[12]，可以设置一个序列数字，只有父交易的区块确认数达到序列数的要求后，交易才能生效。这将允许支出脚本实现一些基本的功能，可以在区块达到一定确认数目之后才会执行。另外，还可以增加一个操作码，OP_CHECKSEQUENCEVERIFY[13] (或者命名为OP_RELATIVECHECKLOCKTIMEVERIFY)[14]，它将允许更多的功能，包括在完全解决交易延展性问题的方案实行之前先实行一个临时解决方案。本文将来会持续更新建议的解决方案。
 
 
 To summarize, Bitcoin was released with a sequence number which was only enforced in the mempool of unconfirmed transactions. The origi- nal behavior permitted transaction replacement by replacing transactions in the mempool with newer transactions if they have a higher sequence num- ber. Due to transaction replacement rules, it is not enforced due to denial of service attack risks. It appears as though the intended purpose of the sequence number is to replace unbroadcasted transactions. However, this higher sequence number replacement behavior is unenforcible. One cannot be assured that old versions of transactions were replaced in the mempool and a block contains the most recent version of the transaction. A way to enforce transaction versions off-chain is via time commitments.
@@ -177,15 +177,15 @@ To summarize, Bitcoin was released with a sequence number which was only enforce
 
 A Revocable Transaction spends from a unique output where the transaction has a unique type of output script. This parent’s output has two redemption paths where the first can be redeemed immediately, and the second can only be redeemed if the child has a minimum number of con- firmations between transactions. This is achieved by making the sequence number of the child transaction require a minimum number of confirmations from the parent. In essence, this new sequence number behavior will only permit a spend from this output to be valid if the number of blocks between the output and the redeeming transaction is above a specified block height.
 
-> 一笔可撤销的交易的输入来自于特定唯一输出的一笔交易。这些父交易都有两个输出，其中第一个可以立即被赎回，第二个只能在当前交易得到足够确认数的情况下才能赎回。这是通过使子交易的序列数受父交易的最小确认数约束实现的。实际上，这种新的包含有序列数的交易，只允许输出和赎回交易之间的区块数目超过指定高度时，此输出的花费才有效。
+> 一笔可撤销的交易的输入来自于特定唯一输出的一笔交易。这些父交易都有两个输出，其中第一个可以立即被赎回，第二个只能在当前交易得到足够确认数的情况下才能赎回。这种机制是通过设置子交易的序列号，要求从父交易开始至少有一定数量的区块确认。实际上，这种新的包含有序列数的交易，只允许输出和赎回交易之间的区块数目超过指定高度时，此输出的花费才有效。
 
 A transaction can be revoked with this sequence number behavior by creating a restriction with some defined number of blocks defined in the sequence number, which will result in the spend being only valid after the parent has entered into the blockchain for some defined number of blocks. This creates a structure whereby the parent transaction with this output becomes a bonded deposit, attesting that there is no revocation. A time period exists which anyone on the blockchain can refute this attestation by broadcasting a spend immediately after the transaction is broadcast.
 
-> 一笔交易可以通过设定一个序列数的方法撤销，创建一笔包含此序列数的交易，当其父交易广播入链后，再经过指定数目的区块确认之后此交易才能生效。这创建了一个结构，其中具有该输出的父交易成为一笔有担保的存款，以证明此交易还没有撤销。锁定时间内，如果有人广播这笔交易想要花费它，其他任何人都能立即检测到这笔支出来反驳这一证明。
+> 一笔交易可以通过设定一个序列数的方法撤销，创建一笔次包含序列数的交易，当其父交易广播入链后，再经过指定数目的区块确认之后此交易才能生效。这创建了一个结构，其中具有该输出的父交易成为一笔有担保的存款，以证明此交易还没有撤销。锁定时间内，如果有人广播这笔交易想要花费它，其他任何人都能立即检测到这笔支出来反驳这一证明。
 
 If one wishes to permit revocable transactions with a 1000- confirmation delay, the output transaction construction would remain a 2-of-2 multisig:
 
-> 如果一个人希望允许将可撤销的交易延迟确认时间设置为1000个确认，那么如果这是一笔2/2多重签名交易的话，输出的构造是这样的：
+> 如果一个人希望允许将可撤销的交易延迟确认时间设置为1000个确认，那么如果这是一笔2/2多重签交易的话，输出的构造是这样的：
 
 ```
 2 <Alice1> <Bob1> 2 OP CHECKMULTISIG
@@ -232,7 +232,7 @@ In order to revoke this signed child transaction, both parties just agree to cre
 
 This new signed spend supersedes the revocable spend so long as the new signed spend enters into the blockchain within 1000 confirmations of the parent transaction entering into the blockchain. In effect, if Alice and Bob agree to monitor the blockchain for incorrect broadcast of Commitment Transactions, the moment the transaction gets broadcast, they are able to spend using the superseding transaction immediately. In order to broadcast the revocable spend (deprecated transaction), which spends from the same output as the superseding transaction, they must wait 1000 confirmations. So long as both parties watch the blockchain, the revocable spend will never enter into the transaction if either party prefers the superseding transaction.
 
-> 只要新签名交易的花费在父交易1000个确认时间内广播入链，这笔交易就会取代之前可撤销的承诺交易。实际上，如果Alice和Bob一直在监视区块链，当有人作弊想要广播旧的承诺交易时，他们可以立即广播其替代交易。而作弊者广播的交易需要等待1000个确认，在这之前其资金已经被替代交易花费掉了。所以只要双方都关注区块链，同一时间总有一方更倾向于广播替代交易，那么实际上可撤销的承诺交易永远实际不会进入区块链。
+> 只要新签名交易的花费在父交易1000个确认时间内广播入链，这笔交易就会取代之前可撤销的承诺交易。实际上，如果Alice和Bob一支在监视区块链，当有人作弊想要广播旧的承诺交易时，他们可以立即广播其替代交易。而作弊者广播的交易需要等待1000个确认，在这之前其资金已经被替代交易花费掉了。所以只要双方都关注区块链，同一时间总有一方更倾向于广播替代交易，那么实际上可撤销的承诺交易永远不会实际进入区块链上。
 
 Using this construction, anyone could create a transaction, not broad-
 cast the transaction, and then later create incentives to not ever broadcast that transaction in the future via penalties. This permits participants on the Bitcoin network to defer many transactions from ever hitting the blockchain.
