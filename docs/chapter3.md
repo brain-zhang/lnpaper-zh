@@ -122,7 +122,7 @@ Figure 2: Either of the Commitment Transactions can be broadcast any any time by
 
 Since either party may broadcast the Commitment Transaction at any time, the result would be after the new Commitment Transaction is gener- ated, the one who receives less funds has significant incentive to broadcast the transaction which has greater values for themselves in the Commitment Transaction outputs. As a result, the channel would be immediately closed and funds stolen. Therefore, one cannot create payment channels under this model.
 
-> 由于任何一方都可以在任何时间广播承诺交易，那么在生成新的承诺交易后，持有较少资金的一方有显著的动机广播对自身输出金额更大的承诺交易。结果，该通道将立即关闭，资金将被窃取，因此，这种模式是无法安全的建立支付通道的。
+> 由于任何一方都可以再任何时间广播承诺交易，那么在生成新的承诺交易后，持有较少资金的一方有显著的动机广播对自身输出金额更大的承诺交易。结果，该通道将立即关闭，资金将被窃取，因此，这种模式是无法安全的建立支付通道的。
 
 
 #### 3.1.4 Commitment Transactions: Ascribing Blame
@@ -130,7 +130,7 @@ Since either party may broadcast the Commitment Transaction at any time, the res
 
 Since any signed Commitment Transaction may be broadcast on the blockchain,  and only one can be successfully broadcast,  it is necessary   to prevent old Commitment Transactions from being broadcast.   It is   not possible to revoke tens of thousands of transactions in Bitcoin, so an alternate method is necessary. Instead of active revocation enforced by the blockchain, it’s necessary to construct the channel itself in similar manner to a Fidelity Bond, whereby both parties make commitments, and violations of these commitments are enforced by penalties. If one party violates their agreement, then they will lose all the money in the channel.
 
-> 由于任何已签署的承诺交易都可以在区块链上广播，并且只能成功广播其中一笔交易，因此有必要防止旧的承诺交易被广播。但同时撤销数万笔比特币交易时不可能的，因此有必要采用另一种方法。与区块链强制执行的主动撤销不同，应该以类似于忠诚契约的方式来构造通道本身，双方据此作出承诺，当违反这些承诺时将会受到惩罚。如果一方违反了协议，他将失去通道中所有的资金。
+> 由于任何已签署的承诺交易都可以在区块链上广播，并且只能成功广播其中一笔交易，因此有必要防止旧的承诺交易被广播。但同时撤销数万笔比特币交易是不可能的，因此有必要采用另一种方法。与区块链强制执行的主动撤销不同，应该以类似于忠诚契约的方式来构造通道本身，双方据此作出承诺，当违反这些承诺时将会受到惩罚。如果一方违反了协议，他将失去通道中所有的资金。
 
 For this payment channel, the contract terms are that both parties commit to broadcasting only the most recent transaction. Any broadcast of older transactions will cause a violation of the contract, and all funds are given to the other party as a penalty.
 
@@ -138,11 +138,11 @@ For this payment channel, the contract terms are that both parties commit to bro
 
 This can only be enforced if one is able to ascribe blame for broad- casting an old transaction. In order to do so, one must be able to uniquely identify who broadcast an older transaction. This can be done if each coun- terparty has a uniquely identifiable Commitment Transaction. Both parties must sign the inputs to the Commitment Transaction which the other party is responsible for broadcasting. Since one has a version of the Commitment Transaction that is signed by the other party, one can only broadcast one’s own version of the Commitment Transaction.
 
-> 只有当一方可以对广播旧交易的另一方施以惩罚时，这一机制才能生效。为了做到这一点，必须能唯一的标识谁广播了较早的承诺交易。这需要每一方都有一笔唯一并可标识的承诺交易。双方必须签署对方负责广播的承诺交易的输入。如果一方拥有对方签署的承诺交易，他就可以放心广播自己所创建的承诺交易。
+> 只有当一方可以对广播旧交易的另一方施以惩罚时，这一机制才能生效。为了做到这一点，必须能唯一的标识谁广播了较早的承诺交易。这需要每一方都有一笔唯一并可标识的承诺交易。双方必须签署对方负责广播的承诺交易的输入部分。由于每个参与者都持有对方签名的承诺交易的副本，因此他们只能广播自己版本的承诺交易。这样的安排确保了在违约情况下可以准确地识别并归责于违约方，从而维护交易的公正性和安全性。
 
 For the Lightning Network, all spends from the Funding Transaction output, Commitment Transactions, have two half-signed transactions. One Commitment Transaction in which Alice signs and gives to Bob (C1b), and another which Bob signs and gives to Alice (C1a). These two Commitment Transactions spend from the same output (Funding Transaction), and have different contents; only one can be broadcast on the blockchain, as both pairs of Commitment Transactions spend from the same Funding Transac- tion. Either party may broadcast their received Commitment Transaction by signing their version and including the counterparty’s signature. For ex- ample, Bob can broadcast Commitment C1b, since he has already received the signature for C1b from Alice —he includes Alice’s signature and signs C1b himself. The transaction will be a valid spend from the Funding Trans- action’s 2-of-2 output requiring both Alice and Bob’s signature.
 
-> 对于闪电网络，所有的来自于保证金交易的输出的花费，即承诺交易们，都只有一半签名。其中 Alice对一笔承诺交易签名并发给Bob(C1b)，Bob对另一笔承诺交易签名并发给Alice(C1a)。这两笔承诺交易的输入来自于同一笔(保证金)交易，但是内容不同；这两笔交易只有一笔可以在区块链上广播。任何一方都可以收到包含对方签名的承诺交易，然后加上自己的签名进行广播。例如，Bob可以广播承诺交易C1b，因为他已经从Alice那里收到了C1b的签名--他只需要再对C1b自己签署一遍就可以了。这笔交易将是保证金交易2/2输出的有效花费，因为同时包含了Alice和Bob的签名。
+> 对于闪电网络，所有的来自于保证金交易的输出的花费，即承诺交易们，都只有一半签名。其中 Alice对一笔承诺交易签名并发给Bob(C1b)，Bob对另一笔承诺交易并发给Alice(C1a)。这两笔承诺交易的输入来自于同一笔(保证金)交易，但是内容不同；这两笔交易只有一笔可以在区块链上广播。任何一方都可以收到包含对方签名的承诺交易，然后加上自己的签名进行广播。例如，Bob可以广播承诺交易C1b，因为他已经从Alice那里收到了C1b的签名--他只需要再对C1b自己签署一遍就可以了。这笔交易将是保证金交易2/2输出的有效花费，因为同时包含了Alice和Bob的签名。
 
 ![Figure3](figures/figure3.png?raw=true "Figure3")
 
@@ -152,7 +152,7 @@ Figure 3: Purple boxes are unbroadcasted transactions which only Alice can broad
 
 However, even with this construction, one has only merely allocated blame. It is not yet possible to enforce this contract on the Bitcoin blockchain. Bob still trusts Alice not to broadcast an old Commitment Transaction. At this time, he is only able to prove that Alice has done so via a half-signed transaction proof.
 
-> 然而，即使有了这样的机制，也只是责任上的约束。目前尚不可能在比特币区块链上执行该合约。Bob仍需要信任Alice不会广播旧的承诺交易。在这个例子中，他只能通过一笔完成一半签名的交易来信任Alice。
+> 然而，即使有了这样的机制，也只是责任上的约束。目前尚不可能在比特币区块链上执行该合约。Bob仍需要信任Alice不会广播旧的承诺交易。在这个例子中，他只能通过一笔完成一半签名的交易来信任Alice。(译者注：这意味着，尽管责任已经明确分配，但在区块链技术层面上，还没有有效的机制来确保和强制执行这些责任分配。这种局限性暴露了当前构造中对信任的依赖，以及缺乏强制执行机制的问题。)
 
 ### 3.2 Creating a Channel with Contract Revocation
 
