@@ -8,7 +8,7 @@ In addition to helping bitcoin scale, there are many uses for transactions on th
 
 • Instant Transactions. Using Lightning, Bitcoin transactions are now nearly instant with any party. It is possible to pay for a cup of coffee with direct non-revocable payment in milliseconds to seconds.
 
-> • •即时交易。通过闪电网络，比特币交易能够几乎瞬间完成，与任何人进行交易都如此。这意味着你可以在仅仅几毫秒到几秒的时间内，通过一种一旦完成即无法撤销的支付方式，购买一杯咖啡。
+> • 即时交易。通过闪电网络，比特币交易能够几乎瞬间完成，与任何人进行交易都如此。这意味着你可以在仅仅几毫秒到几秒的时间内，通过一种一旦完成即无法撤销的支付方式，购买一杯咖啡。
 
 • Exchange Arbitrage. There is presently incentive to hold funds on exchanges to be ready for large market moves due to 3-6 block con- firmation times. It is possible for the exchange to participate in this network and for clients to move their funds on and off the exchange for orders nearly instantly. If the exchange does not have deep market depth and commits to only permitting limit orders close to the top of the order book, then the risk of coin theft becomes much lower. The exchange, in effect, would no longer have any need for a cold storage wallet. This may substantially reduce thefts and the need for trusted third party custodians.
 
