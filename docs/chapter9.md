@@ -4,15 +4,14 @@
 
 The primary risks relate to timelock expiration. Additionally, for core nodes and possibly some merchants to be able to route funds, the keys must be held online for lower latency. However, end-users and nodes are able to keep their private keys firewalled off in cold storage.
 
-> 主要的风险与时间锁过期有关。此外，为了核心节点和收款商家能够路由资金，他们必须在线保存密钥，以降低延迟。但是，终端用户和节点可以将私钥冷存储。
-
+> 主要的风险在于时间锁定功能的到期问题。简而言之，时间锁定是一种机制，它为交易设定了一个截止时间。另外，对于一些关键节点和商家来说，为了更快地处理交易，他们需要将密钥保持在网络上，以减少交易延迟。但对于普通用户和其他节点而言，为了更好地保护安全，他们可以选择将私钥存放在与网络隔离的安全环境中，即所谓的“冷存储”。
 ### 9.1 Improper Timelocks
 
 ### 不合适的时间锁
 
 Participants must choose timelocks with sufficient amounts of time. If insuf- ficient time is given, it is possible that timelocked transactions believed to be invalid will become valid, enabling coin theft by the counterparty. There is a trade-off between longer timelocks and the time-value of money. When writing wallet and Lightning Network application software, it is necessary to ensure that sufficient time is given and users are able to have their trans- actions enter into the blockchain when interacting with non-cooperative or malicious channel counterparties.
 
-> 参与者必须选择足够充裕的时间锁。如果没有设定足够长的时间，一些超时的交易可能会被误认为仍然有效，从而让交易对手有窃取资金的机会。要在更长的时间锁和资金的时间价值之间找到平衡。当开发一个钱包然间或闪电网络应用的时候，需要设定足够长的时间，保证用户在与非合作和恶意通道对手进行交互时，能从容的在区块链上广播交易收回资金。
+> 参与者必须谨慎选择时间锁的持续时间。如果没有设定足够长的时间，一些超时的交易可能会被误认为仍然有效，从而让交易对手有窃取资金的机会。在设定更长的时间锁与考虑货币的时间价值之间需要做出平衡。在开发钱包和闪电网络应用软件时，开发者必须确保为这些时间锁设定足够的时间，保证用户在与非合作和恶意通道对手进行交互时，能从容的在区块链上广播交易收回资金。
 
 ### 9.2 Forced Expiration Spam
 
@@ -20,15 +19,15 @@ Participants must choose timelocks with sufficient amounts of time. If insuf- fi
 
 Forced expiration of many transactions may be the greatest systemic risk when using the Lightning Network. If a malicious participant creates many channels and forces them all to expire at once, these may overwhelm block data capacity, forcing expiration and broadcast to the blockchain. The result would be mass spam on the bitcoin network. The spam may delay transactions to the point where other locktimed transactions become valid.
 
-> 闪电网络中出现大量故意超时的交易是最大的系统风险。如果恶意的参与者创建了许多通道并强制所有通道同时终止，这样需要广播的交易会产生大量数据填满区块，从而阻塞链上的交易处理。结果将是比特币网络上出现大量垃圾交易。这些垃圾交易某种程度上会阻塞交易，从而让一些带有时间锁的交易一直有效。
+> 在使用闪电网络时，可能面临的最大系统性风险是强制同时结束大量交易。如果恶意的参与者创建了许多通道并强制所有通道同时终止，这样需要广播的交易会产生大量数据填满区块，从而阻塞链上的交易处理。结果将是比特币网络上出现大量垃圾交易。这些垃圾交易某种程度上会阻塞交易，可能会导致其他设定了特定时间后才能执行的交易被延迟，从而在实际上变得可执行。
 
 This may be mitigated by permitting one transaction replacement on all pending transactions. Anti-spam can be used by permitting only one transaction replacement of a higher sequence number by the inverse of an even or odd number. For example, if an odd sequence number was broad- cast, permit a replacement to a higher even number only once. Transactions would use the sequence number in an orderly way to replace other trans- actions. This mitigates the risk assuming honest miners. This attack is extremely high risk, as incorrect broadcast of Commitment Transactions entail a full penalty of all funds in the channel.
 
-> 可以使用一笔交易来替换所有未入链的交易这种措施来缓解。同一笔交易如果要改成更高的序列号来替换的话，只能反转一个奇数或者偶数，且只有一次机会。例如，一笔带有奇数序列号的交易被广播了，那么只允许使用一个偶数作为更高序列号进行一次替换。交易将使用有序的序列号来替换其它交易。这降低了诚实矿工所承担的风险。这样对承诺交易的恶意广播将导致丢失通道内的所有资金，因此这种攻击有非常高的风险。
+> 为了减轻这种风险，可以采取一种方法，即允许对所有未完成的交易进行一次替换。为了防止滥用，系统可以仅允许一次用具有更高序列号的交易来替换原交易，并且这个更高的序列号必须是原序列号的偶数或奇数对应。举个例子，如果原交易的序列号是奇数，那么只能被序列号为更高偶数的交易替换，且只能替换一次。通过这种方式，交易可以用有序的序列号来替代其他交易，从而降低风险。这个假设基于矿工会遵守规则，不会滥用系统。但这种攻击的风险仍然很高，因为错误广播的承诺交易可能导致通道内所有资金的损失。
 
 Additionally, one may attempt to steal HTLC transactions by forcing a timeout transaction to go through when it should not. This can be easily mitigated by having each transfer inside the channel be lower than the total transaction fees used. Since transactions are extremely cheap and do not hit the blockchain with cooperative channel counterparties, large transfers of value can be split into many small transfers. This attempt can only work if the blocks are completely full for a long time. While it is possible to mitigate it using a longer HTLC timeout duration, variable block sizes may become common, which may need mitigations.
 
-> 另外，一方可能会强制让HTLC的一笔本应正常存活的交易超时，从而窃取资金。这可以通过让通道内的每一笔交易金额低于所使用的总交易费用来轻松缓解。由于交易金额非常小，而且同交易对手建立支付通道后，不需要广播入链，因此可以将一笔大额交易拆分为许多小额交易。这种攻击尝试只有在区块负荷满载的时候才有效。虽然可以使用更长的HTLC超时时间来缓解这种情况，但是区块大小可作一定调整的特性可能很快会实现，到时候情况就好多了。
+> 还有一种风险是，有人可能试图通过强行让一个本应失效的超时交易成功执行，来盗取在闪电网络中进行的 HTLC 交易。这可以通过让通道内的每一笔交易金额低于所使用的总交易费用来轻松缓解。由于交易金额非常小，而且同交易对手建立支付通道后，不需要广播入链，因此可以将一笔大额交易拆分为许多小额交易。这种攻击尝试只有在区块负荷满载的时候才有效。虽然可以使用更长的HTLC超时时间来缓解这种情况，但是区块大小可作一定调整的特性可能很快会实现，到时候情况就好多了。
 
 If this type of transaction becomes the dominant form of transactions which are included on the blockchain, it may become necessary to increase the block size and run a variable blocksize structure and timestop flags   as described in the section below. This can create sufficient penalties and disincentives to be highly unprofitable and unsuccessful for attackers, as attackers lose all their funds from broadcasting the wrong transaction, to the point where it will never occur.
 
@@ -53,7 +52,7 @@ A Funding Transaction may have multiple outputs with multiple Com- mitment Trans
 
 When one party loses data, it is possible for the counterparty to steal funds. This can be mitigated by having a third party data storage service where encrypted data gets sent to this third party service which the party cannot decrypt. Additionally, one should choose channel counterparties who are responsible and willing to provide the current state, with some periodic tests of honesty.
 
-> 当一方丢失数据时，另一方就有可能窃取资金。这个风险可以通过第三方数据存储服务来缓解。把数据加密发送给三方存储服务，只有自己可以解密。另外，你应该选择那些响应及时并且愿意公开当前状态的交易对手方，并定期进行诚信测试。
+> 当一方在交易中丢失数据，他们的交易对手就有可能趁机窃取资金。为了防止这种情况，可以利用第三方的数据存储服务。这种服务能够保存加密的数据，而且即使是数据的发送方也无法解密，从而确保数据的安全。此外，选择一个负责任并且乐于分享当前交易状态的交易对手也很重要。为了验证对方的可靠性，定期进行一些小规模的交易测试也是一个好方法。通过这种方式，可以降低数据丢失导致资金被窃的风险。
 
 ### 9.5 Forgetting to Broadcast the Transaction in Time 
 
@@ -61,7 +60,7 @@ When one party loses data, it is possible for the counterparty to steal funds. T
 
 If one does not broadcast a transaction at the correct time, the counterparty may steal funds. This can be mitigated by having a designated third party to send funds. An output fee can be added to create an incentive for this third party to watch the network. Further, this can also be mitigated by implementing OP CHECKSEQUENCEVERIFY.
 
-> 如果没有在正确的时间广播交易，交易对手可能会窃取资金。这可以通过在发送资金的时候指定第三方监控服务来辅助。可以增加输出费用来鼓励第三方监控网络。此外，还可以通过实现OP_CHECKSEQUENCEVERIFY来缓解这种情况。
+> 如果一个人没有在预定的时间内完成交易广播，他们的交易对手就有可能非法夺取资金。这种风险可以通过委托一个专门的第三方来发送资金来降低。为了激励这个第三方密切监控网络状况，可以在交易中加入一定的手续费作为奖励。另外，引入一个名为“OP CHECKSEQUENCEVERIFY”的技术功能，也有助于防止这种风险。它允许设置更复杂的条件来控制交易的执行，从而提高交易的安全性。
 
 ### 9.6 Inability to Make Necessary Soft-Forks
 
