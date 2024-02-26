@@ -245,23 +245,23 @@ cast the transaction, and then later create incentives to not ever broadcast tha
 
 To mitigate a flood of transactions by a malicious attacker requires a credible threat that the attack will fail.
 
-> 为了减少恶意攻击者发起的大量交易，需要一个可靠的震慑方案来阻止攻击。
+> 为了减少恶意攻击者发起的大量灰尘交易，需要一个可靠的震慑方案来阻止攻击。
 
 Greg Maxwell proposed using a timestop to mitigate a malicious flood on the blockchain:
 
 There are many ways to address this [flood risk] which haven’t been adequately explored yet —for example, the clock can stop when blocks are full; turning the security risk into more hold-up delay in the event of a dos attack.[15]
 
-> Greg Maxwell建议使用一个timestop(计时标识)来缓解区块链上的大量交易洪水攻击：
+> Greg Maxwell 提出了一种方法，即使用“时间停止”策略来减轻区块链上恶意交易泛滥的问题：
 
-> 有很多方法可以解决这个[洪水攻击风险]，但这些方法还没有得到充分的探索--例如，可以在区块链写满的时候停止计时，在DDOS攻击事件中，用延迟方案来缓解安全风险。
+> 尽管目前还没有充分探索，但存在多种潜在的解决方案来应对这类洪水风险。--例如，可以在区块链写满的时候停止计时，这种做法能够将由于拒绝服务（DoS）攻击带来的安全风险转化为更长的交易确认延迟。
 
 This can be mitigated by allowing the miner to specify whether the current (fee paid) mempool is presently being flooded with transactions. They can enter a “1” value into the last bit in the version number of the block header. If the last bit in the block header contains a “1”, then that block will not count towards the relative height maturity for the nSequence value and the block is designated as a congested block. There is an uncongested block height (which is always lower than the normal block height). This block height is used for the nSequence value, which only counts block maturity (confirmations).
 
-> 这可以通过让矿工来判断当前的交易费率下，内存池中是否充斥着大量的交易来缓解。他们可以把区块头版本号的最后一位置为”1”。如果区块头最后一位包含”1”，那么该区块不计入nSequence值的相对高度成熟度，并且指定该区块为拥塞块。同时引入一个指标代表不拥挤的块的块高度(这个值总是低于正常块高度)。这个块高度用于与nSequence值比较，它只用于计算块的成熟度（确认数）。
+> 这种情况可以通过一种方法来缓解：允许矿工判断当前（已支付费用的）内存池是否正遭受大量交易的泛滥。他们可以把区块头版本号的最后一位置为”1”。如果区块头最后一位包含”1”，那么该区块不计入nSequence值的相对高度成熟度，并且指定该区块为拥塞块。同时引入一个指标代表不拥挤的块的块高度(这个值总是低于正常块高度)。这个块高度用于与nSequence值比较，它只用于计算块的成熟度（确认数）。
 
 A miner can elect to define the block as a congested block or not. The default code could automatically set the congested block flag as “1” if the mempool is above some size and the average fee for that set size is above some value. However, a miner has full discretion to change the rules on what automatically sets as a congested block, or can select to permanently set the congestion flag to be permanently on or off. It’s expected that most honest miners would use the default behavior defined in their miner and not organize a 51% attack.
 
-> 矿工可以选择将块定义为拥塞块或不拥塞块，默认代码可以在内存池中支付交易费用的交易超过一定限制后，自动将拥塞块标志为”1”。另外，矿工可以自己定义什么才是一个拥塞块，也可以选择将所有的块都标志位拥塞块或非拥塞块。我们估计诚实的矿工将使用默认定义行为，不会发动51%攻击。
+> 矿工有权选择是否将某个区块定义为拥堵区块。如果内存池的大小超过特定阈值，且该内存池中的交易的平均手续费也超过某个值，那么默认的代码逻辑可以自动将该区块的拥堵标志设置为“1”。然而，矿工完全有权修改这种自动设置拥堵区块的规则，或者选择将拥堵标志永久地设置为开启或关闭状态。通常情况下，大多数诚实的矿工会采用他们矿机中定义的默认设置，并不会参与组织51%攻击。这种机制提供了灵活性，允许矿工根据网络的实际情况来调整区块的拥堵标志，从而在网络拥堵时采取相应的措施，以维护整个比特币网络的稳定和安全。
 
 For example, if a parent transaction output is spent by a child with a nSequence value of 10, one must wait 10 confirmations before the transaction becomes valid. However, if the timestop flag has been set, the counting of confirmations stops, even with new blocks. If 6 confirmations have elapsed (4 more are necessary for the transaction to be valid), and the timestop block has been set on the 7th block, that block does not count towards the nSequence requirement of 10 confirmations; the child is still at 6 blocks for the relative confirmation value. Functionally, this will be stored as some kind of auxiliary timestop block height which is used only for tracking the timestop value. When the timestop bit is set, all transactions using an nSe- quence value will stop counting until the timestop bit has been unset. This gives sufficient time and block-space for transactions at the current auxil- iary timestop block height to enter into the blockchain, which can prevent systemic attackers from successfully attacking the system.
 
