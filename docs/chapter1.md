@@ -9,7 +9,7 @@ The Bitcoin[1] blockchain holds great promise for distributed ledgers, but the b
 
 The payment network Visa achieved 47,000 peak transactions per sec- ond (tps) on its network during the 2013 holidays[2], and currently averages hundreds of millions per day. Currently, Bitcoin supports less than 7 trans- actions per second with a 1 megabyte block limit. If we use an average of 300 bytes per bitcoin transaction and assumed unlimited block sizes, an equiva- lent capacity to peak Visa transaction volume of 47,000/tps would be nearly 8 gigabytes per Bitcoin block, every ten minutes on average. Continuously, that would be over 400 terabytes of data per year.
 
-> 2013年节假日期间，Visa支付网络实现了每秒4.7万笔交易的峰值，而目前它每天平均处理的交易量已经达到数亿笔。对比来看，比特币网络每秒只能支持不到7次交易，并且每个区块的大小不能超过1MB。如果我们每一笔比特币交易平均大小为300字节，并假设区块大小不受限制，每十分钟生成一个区块的前提下，那么要达到Visa的最大交易峰值47000TPS，需要每个区块达到8GB。每年将会生成超过400TB的数据。
+> 2013年节假日期间，Visa支付网络实现了每秒4.7万笔交易的峰值，而目前它每天平均处理的交易量已经达到数亿笔。对比来看，比特币网络每秒只能支持不到7次交易，并且每个区块的大小不能超过1MB。如果每一笔比特币交易平均大小为300字节，并假设区块大小不受限制，每十分钟生成一个区块的前提下，那么要达到Visa的最大交易峰值47000TPS，需要每个区块达到8GB。每年将会生成超过400TB的数据。
 
 
 Clearly, achieving Visa-like capacity on the Bitcoin network isn’t fea- sible today. No home computer in the world can operate with that kind of bandwidth and storage. If Bitcoin is to replace all electronic payments in the future, and not just Visa, it would result in outright collapse of the Bit- coin network, or at best, extreme centralization of Bitcoin nodes and miners to the only ones who could afford it. This centralization would then defeat aspects of network decentralization that make Bitcoin secure, as the abil- ity for entities to validate the chain is what allows Bitcoin to ensure ledger accuracy and security.
@@ -30,4 +30,4 @@ To achieve much higher than 47,000 transactions per second using Bitcoin require
 
 While it is possible to scale at a small level, it is absolutely not possible to handle a large amount of micropayments on the network or to encompass all global transactions. For bitcoin to succeed, it requires confidence that if it were to become extremely popular, its current advantages stemming from decentralization will continue to exist. In order for people today to believe that Bitcoin will work tomorrow, Bitcoin needs to resolve the issue of block size centralization effects; large blocks implicitly create trusted custodians and significantly higher fees.
 
-> 尽管在较小的规模上实现网络扩展是可能的，但要在网络上处理大量的微支付或覆盖所有全球交易是非常困难的。要想让比特币成功，它需要人们对它有这样的信心：如果它将来广泛应用，那么它目前的去中心化的优势也会继续存在。为了让今天的人们相信比特币的明天是美好的，比特币需要解决区块太大所导致的集中化问题；大区块会带来集中化的托管人，并大幅提高了手续费用。
+> 尽管在较小的规模上实现网络扩展是可能的，但要在网络上处理大量的微支付或覆盖所有全球交易是非常困难的。要想让比特币成功，它需要人们对它有这样的信心：它将来广泛应用之后，目前的去中心化的优势也会继续存在。为了让今天的人们相信比特币的明天是美好的，比特币需要解决区块太大所导致的集中化问题；大区块会带来集中化的托管人，并大幅提高了手续费用。
