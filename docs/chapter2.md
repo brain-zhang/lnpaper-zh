@@ -1,5 +1,5 @@
 # 2.A Network of Micropayment Channels Can Solve Scalability
-# 2.微支付通道网络可以解决扩展性问题
+# 2.用微支付通道网络解决扩展性问题
 
 “If a tree falls in the forest and no one is around to hear it, does it make a sound?”
 
