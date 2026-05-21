@@ -4,26 +4,28 @@
 
 In addition to helping bitcoin scale, there are many uses for transactions on the Lightning Network:
 
-> 除了扩展比特币系统的处理能力，闪电网络交易还有许多用途：
+> 除了助力比特币扩容外，闪电网络交易还拥有广泛的应用场景：
 
 • Instant Transactions. Using Lightning, Bitcoin transactions are now nearly instant with any party. It is possible to pay for a cup of coffee with direct non-revocable payment in milliseconds to seconds.
 
-> • 即时交易。使用闪电网络，现在可以近乎实时的与另一方完成交易。现在终于可以在毫秒级别为一杯咖啡进行不可撤销的支付了。
+> • **即时交易**。利用闪电网络，比特币交易几乎可以在瞬间完成。用户能在毫秒到秒级的时间内完成一单不可撤销的咖啡支付。
 
 • Exchange Arbitrage. There is presently incentive to hold funds on exchanges to be ready for large market moves due to 3-6 block con- firmation times. It is possible for the exchange to participate in this network and for clients to move their funds on and off the exchange for orders nearly instantly. If the exchange does not have deep market depth and commits to only permitting limit orders close to the top of the order book, then the risk of coin theft becomes much lower. The exchange, in effect, would no longer have any need for a cold storage wallet. This may substantially reduce thefts and the need for trusted third party custodians.
 
-> • 外汇套利。目前，由于交易所充值需要3-6 个确认。投资者倾向于把币放在交易所，为市场的大幅波动做好准备。以后交易所可以接入闪电网络，用户充值、提币可以即时结算。如果交易所没有很深的市场深度，并承诺只允许接近订单顶部的限价单成交，那么资金被盗的风险就会降低很多。实际上，这种交易所将不需要任何冷钱包。这可能大大减少盗窃和对可信任的三方托管人的需求。
+> • **交易所套利**。目前由于充值需 3-6 个区块确认，投资者往往需将资金存放在交易所内以应对市场波动。若交易所接入闪电网络，用户可实现资金的秒级充提。
+>
+> 这种模式下，交易所甚至无需维持庞大的冷钱包，从而显著降低资金被盗风险，减少对第三方托管机构的依赖。
 
 • Micropayments. Bitcoin blockchain fees are far too high to accept micropayments, especially with the smallest of values. With this sys- tem, near-instant micropayments using Bitcoin without a 3rd party custodian would be possible. It would enable, for example, paying per-megabyte for internet service or per-article to read a newspaper.
 
-> • 小额支付。比特币区块链的手续费用太高，不适合小额支付，尤其是那些金额非常小的支付。有了闪电网络，不需要三方托管，就能使用比特币进行近乎即时的微支付。例如，它将支持这样的服务--按照兆字节对互联网流量收费，以及每阅读一篇文章就付一次费用。
+> • **微支付**（Micropayments）。比特币链上手续费过高，难以承载超小额支付。闪电网络实现了无需第三方托管的即时微支付，支持诸如按兆字节计费的上网服务或按篇计费的新闻阅读。
 
 • Financial Smart Contracts and Escrow. Financial contracts are espe- cially time-sensitive and have higher demands on blockchain computa- tion. By moving the overwhelming majority of trustless transactions off-chain, it is possible to have highly complex transaction contract terms without ever hitting the blockchain.
 
-> • 金融智能合约和托管服务。金融合约具有很强的时效性，对计算有较高的要求。将绝大多数不可信的交易移除链，就有可能拥有高度复杂的交易合约，而不用一定广播到区块链。
+> • **金融智能合约与托管**。金融合约对时效性和链上计算有极高要求。通过将绝大部分去信任化（Trustless）交易转移至链下，我们可以实现复杂的合约条款而无需将其广播至区块链。
 
 • Cross-Chain Payments. So long as there are similar hash-functions across chains, it’s possible for transactions to be routed over multi- ple chains with different consensus rules. The sender does not have to trust or even know about the other chains – even the destination chain. Simiarly, the receiver does not have to know anything about the sender’s chain or any  other chain.  All the receiver cares about  is a conditional payment upon knowledge of a secret on their chain. Payment can be routed by participants in both chains in the hop. E.g. Alice is on Bitcoin, Bob is on both Bitcoin and X-Coin and Carol is on a hypothetical X-Coin, Alice can pay Carol without understanding the X-Coin consensus rules.
 
-> 跨链交易。这要链之间存在类似的哈希函数，就可以可能将交易路由到具有不同共识规则的多条链上。发送方不必信任甚至不用了解其它的链--甚至是发送的目的链。同样，接收者不需要了解发送者的链或任何其它链的信息。接收者所关心的只是一笔合约付款，他们只要在资金所在的链解开合约即可。
-
-> 支付交易可以在两条链上路由。例如，Alice使用比特币，Bob同时使用比特币和X币，Carol使用X币，Alice可以在不了解X币共识规则的情况下支付给Carol。
+> • **跨链支付**。只要不同区块链采用相似的哈希函数，交易即可在具有不同共识规则的链间进行路由。发送方无需了解甚至无需感知目标链的存在；接收方亦然。
+>
+> 接收方仅关心基于其本链原像披露的条件支付。支付可在跨链跳点由同时参与两条链的节点进行转发。例如，Alice 在比特币链上，Carol 在 X 币链上，Alice 可通过跨链节点 Bob 向 Carol 发起支付，而无需理解 X 币的共识规则。
