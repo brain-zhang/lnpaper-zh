@@ -33,7 +33,7 @@ Presume Alice wishes to send 0.001 BTC to Dave. She locates a route through Bob 
 
 Figure 15: Payment over the Lightning Network using HTLCs.
 
-> 图15: 利用HTLCs在商店网络上发送支付交易
+> 图15: 利用HTLCs在闪电网络上发送支付交易
 
 When Alice sends payment to Dave through Bob and Carol, she re- quests from Dave hash(R) to use for this payment. Alice then counts the amount of hops until the recipient and uses that as the HTLC expiry. In this case, she sets the HTLC expiry at 3 days. Bob then creates an HTLC with Carol with an expiry of 2 days, and Carol does the same with Dave with an expiry of 1 day. Dave is now free to disclose R to Carol, and both parties will likely agree to immediate settlement via novation with a replacement Com- mitment Transaction. This then occurs step-by-step back to Alice. Note that this occurs off-chain, and nothing is broadcast to the blockchain when all parties are cooperative.
 

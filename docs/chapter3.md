@@ -41,11 +41,11 @@ Alice and Bob both exchange inputs to fund the Funding Transaction(to know which
 
 The Lightning Network uses a SIGHASH NOINPUT  transaction  to  spend from this 2-of-2 Funding Transaction output, as it is necessary to spend from a transaction for which the signatures are not yet exchanged. SIGHASH NOINPUT, implemented using a soft-fork, ensures transactions can be spent from before it is signed by all parties, as transactions would need to be signed to get a transaction ID without new sighash flags. Without SIGHASH NOINPUT, Bitcoin transactions cannot be spent from before they may be broadcast —it’s as if one could not draft a contract without paying the other party first. SIGHASH NOINPUT resolves this problem. See Appendix A for more information and implementation.
 
-> 闪电网络使用 SIGHASH NOINPUT类型的交易来花费2/2保证金交易的输出，因为必须要构建一笔交易用于花费尚未交换签名的交易输出。SIGHASH NOINPUT将使用软分叉实现，它确保了交易可以在双方签署之前就能构造花费的交易，如果没有这个操作符的话，那交易就必须通过签署才能构造交易ID，那样就不能在广播这笔交易之前先来构造消费它的交易--这就好像一个人不先付款给另一方就不能起草合同一样。SIGHASH NOINPUT解决了这个问题，有关这方面更多信息和实现，亲参考附录A。
+> 闪电网络使用 SIGHASH NOINPUT类型的交易来花费2/2保证金交易的输出，因为必须要构建一笔交易用于花费尚未交换签名的交易输出。SIGHASH NOINPUT将使用软分叉实现，它确保了交易可以在双方签署之前就能构造花费的交易，如果没有这个操作符的话，那交易就必须通过签署才能构造交易ID，那样就不能在广播这笔交易之前先来构造消费它的交易--这就好像一个人不先付款给另一方就不能起草合同一样。SIGHASH NOINPUT解决了这个问题，有关这方面更多信息和实现，请参考附录A。
 
 Without SIGHASH NOINPUT, it is not possible to generate a spend from a transaction without exchanging signatures, since spending the Fund- ing Transaction requires a transaction ID as part of the signature in the child’s input. A component of the Transaction ID is the parent’s (Funding Transaction’s) signature, so both parties need to exchange their signatures of the parent transaction before the child can be spent. Since one or both par- ties must know the parent’s signatures to spend from it, that means one or both parties are able to broadcast the parent (Funding Transaction) before the child even exists. SIGHASH NOINPUT gets around this by permitting the child to spend without signing the input. With SIGHASH NOINPUT, the order of operations are to:
 
-> 如果没有SIGHASH NOINPUT，就无法在不交换签名的情况下生成花费它的交易，因为要花费保证金交易的输出，就需要交易ID作为花费交易输入的一部分。交易ID的一个组成部分是它的父交易方(即保证金交易)的签名，因此双方需要在创建子交易之前交换父交易的签名。由于一方或双方都需要夫交易的签名才能花费它，这就意味着一方或双方都能在子交易存在之前就能广播父交易(保证金交易)。SIGHASH NOINPUT允许子交易在不签署交易输入的情况下花费它，从而解决了这个问题。使用SIGHASH NOINPUT，操作顺序为：
+> 如果没有SIGHASH NOINPUT，就无法在不交换签名的情况下生成花费它的交易，因为要花费保证金交易的输出，就需要交易ID作为花费交易输入的一部分。交易ID的一个组成部分是它的父交易方(即保证金交易)的签名，因此双方需要在创建子交易之前交换父交易的签名。由于一方或双方都需要父交易的签名才能花费它，这就意味着一方或双方都能在子交易存在之前就能广播父交易(保证金交易)。SIGHASH NOINPUT允许子交易在不签署交易输入的情况下花费它，从而解决了这个问题。使用SIGHASH NOINPUT，操作顺序为：
 
 1.Create the parent (Funding Transaction)
 
@@ -232,7 +232,7 @@ In order to revoke this signed child transaction, both parties just agree to cre
 
 This new signed spend supersedes the revocable spend so long as the new signed spend enters into the blockchain within 1000 confirmations of the parent transaction entering into the blockchain. In effect, if Alice and Bob agree to monitor the blockchain for incorrect broadcast of Commitment Transactions, the moment the transaction gets broadcast, they are able to spend using the superseding transaction immediately. In order to broadcast the revocable spend (deprecated transaction), which spends from the same output as the superseding transaction, they must wait 1000 confirmations. So long as both parties watch the blockchain, the revocable spend will never enter into the transaction if either party prefers the superseding transaction.
 
-> 只要新签名交易的花费在父交易1000个确认时间内广播入链，这笔交易就会取代之前可撤销的承诺交易。实际上，如果Alice和Bob一支在监视区块链，当有人作弊想要广播旧的承诺交易时，他们可以立即广播其替代交易。而作弊者广播的交易需要等待1000个确认，在这之前其资金已经被替代交易花费掉了。所以只要双方都关注区块链，同一时间总有一方更倾向于广播替代交易，那么实际上可撤销的承诺交易永远不会实际进入区块链上。
+> 只要新签名交易的花费在父交易1000个确认时间内广播入链，这笔交易就会取代之前可撤销的承诺交易。实际上，如果Alice和Bob一直在监视区块链，当有人作弊想要广播旧的承诺交易时，他们可以立即广播其替代交易。而作弊者广播的交易需要等待1000个确认，在这之前其资金已经被替代交易花费掉了。所以只要双方都关注区块链，同一时间总有一方更倾向于广播替代交易，那么实际上可撤销的承诺交易永远不会实际进入区块链上。
 
 Using this construction, anyone could create a transaction, not broad-
 cast the transaction, and then later create incentives to not ever broadcast that transaction in the future via penalties. This permits participants on the Bitcoin network to defer many transactions from ever hitting the blockchain.
@@ -376,7 +376,7 @@ Figure 8: When C2a and C2b exist, both parties exchange Breach Remedy transactio
 
 Due to this fact, one will likely delete all prior Commitment Transac- tions when a Breach Remedy Transaction has been passed to the counter- party. If one broadcasts an incorrect (deprecated and invalidated Commit- ment Transaction), all the money will go to one’s counterparty. For example, if Bob broadcasts C1b, so long as Alice watches the blockchain within the predefined number of blocks (in this case, 1000 blocks), Alice will be able to take all the money in this channel by broadcasting RD1b.  Even if the present balance of the Commitment state (C2a/C2b) is 0.4 BTC to Alice and 0.6 BTC to Bob, because Bob violated the terms of the contract, all the money goes to Alice as a penalty. Functionally, the Revocable Transaction acts as a proof to the blockchain that Bob has violated the terms in the channel and this is programatically adjudicated by the blockchain.
 
-> 由于这一事实，当违约补偿交易已经发送给对手方时，可能会删除所有先前的承诺交易。如果广播了一笔错误的交易(对方不赞同或者无效)，通道内所有的钱将会给另一方。例如，如果Bob广播C1b，只要Alice在预定的新区块数内(在本例中为1000个新区快)一直监控区块链，Alice就能够通过广播RD1b接收该通道内的所有资金。即使当前承诺交易锁定(C1a/C2b)的余额分配为Alice 0.4BTC，Bob 0.6BTC也是这样。因为Bob违反了合约，作为惩罚，所有的钱都会给Alice。从功能上来看，可撤销的交易充当向区块链证明Bob违反了支付通道合约的证据，这是由区块链通过智能合约来裁定的。
+> 由于这一事实，当违约补偿交易已经发送给对手方时，可能会删除所有先前的承诺交易。如果广播了一笔错误的交易(对方不赞同或者无效)，通道内所有的钱将会给另一方。例如，如果Bob广播C1b，只要Alice在预定的新区块数内(在本例中为1000个新区块)一直监控区块链，Alice就能够通过广播RD1b接收该通道内的所有资金。即使当前承诺交易锁定(C1a/C2b)的余额分配为Alice 0.4BTC，Bob 0.6BTC也是这样。因为Bob违反了合约，作为惩罚，所有的钱都会给Alice。从功能上来看，可撤销的交易充当向区块链证明Bob违反了支付通道合约的证据，这是由区块链通过智能合约来裁定的。
 
 ![Figure9](figures/figure9.png?raw=true "Figure9")
 

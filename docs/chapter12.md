@@ -16,4 +16,4 @@ If all transactions using Bitcoin were conducted inside a network of micropaymen
 
 With a network of instantly confirmed micropayment channels whose payments are encumbered by timelocks and hashlock outputs, Bitcoin can scale to billions of users without custodial risk or blockchain centralization when transactions are conducted securely off-chain using bitcoin scripting, with enforcement of non-cooperation by broadcasting signed multisignature transactions on the blockchain.
 
-> 通过建立一个即时确认的小额支付通道，在这个通道中转发带有时间锁和哈希锁的交易，比特币可以扩展到数十亿用户，这一切没有托管风险，也不会导致区块链网络心化问题。通过比特币脚本合约，在互不可信的环境下建立并广播多重签名交易，可以安全的在链下完成所有交易。
+> 通过建立一个即时确认的小额支付通道，在这个通道中转发带有时间锁和哈希锁的交易，比特币可以扩展到数十亿用户，这一切没有托管风险，也不会导致区块链网络中心化问题。通过比特币脚本合约，在互不可信的环境下建立并广播多重签名交易，可以安全的在链下完成所有交易。

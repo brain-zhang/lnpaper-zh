@@ -61,7 +61,7 @@ Thus, micropayment channels only create a relationship between two parties. Requ
 
 If we presume a large network of channels on the Bitcoin blockchain, and all Bitcoin users are participating on this graph by having at least one channel open on the Bitcoin blockchain, it is possible to create a near-infinite amount of transactions inside this network. The only transactions that are broadcasted on the Bitcoin blockchain prematurely are with uncooperative channel counterparties.
 
-> 如果我们假设比特币区块链上有一个巨大的支付通道网络，并且所有比特币用户都通过在比特币区块链上开设至少一个通道来参与这个网络，那么这个网络就会承载近乎无限的交易。只有给那些没有支付通道的用户发送比特币时，才需要链上广播。
+> 如果我们假设比特币区块链上有一个巨大的支付通道网络，并且所有比特币用户都通过在比特币区块链上开设至少一个通道来参与这个网络，那么这个网络就会承载近乎无限的交易。只有在通道对方不合作的情况下，才需要将交易提前广播到比特币区块链上。
 
 By encumbering the Bitcoin transaction outputs with a hashlock and timelock, the channel counterparty will be unable to outright steal funds and Bitcoins can be exchanged without outright counterparty theft. Fur- ther, by using staggered timeouts, it’s possible to send funds via multiple intermediaries in a network without the risk of intermediary theft of funds.
 

@@ -28,7 +28,7 @@ Since this will always resolve to true provided a valid redeemScript, all existi
 
 SIGHASH NOINPUT would neither sign any input transactions IDs nor sign the index. By using SIGHASH NOINPUT, one can be assured that one’s counterparty cannot invalidate entire trees of chained transactions of potential contract states which were previously agreed upon, using transac- tion ID mutation. With the new sighash flags, it is possible to spend from a parent transaction even though the transaction ID has changed, so long as the script evaluates as true (i.e. a valid signature).
 
-> SIGHASH_NOINPUT 既不签署任何输入部分交易的ID，也不签署任何索引。使用SIGHASH_NOINPUT ，可以确保交易对手方不能通过改变交易ID，使之前协商的整个合约中交易链失效。引入这个新的哈希类型标识，即时输入部分的交易ID改变了，只要脚本的计算结果为真值(即签名有效)，也可以花费。
+> SIGHASH_NOINPUT 既不签署任何输入部分交易的ID，也不签署任何索引。使用SIGHASH_NOINPUT ，可以确保交易对手方不能通过改变交易ID，使之前协商的整个合约中交易链失效。引入这个新的哈希类型标识，即使输入部分的交易ID改变了，只要脚本的计算结果为真值(即签名有效)，也可以花费。
 
 SIGHASH NOINPUT implies significant risk with address reuse, as it can work with any transaction in which the sigScript returns as valid, so multiple transactions with the same outputs are redeemable (provided the output values are less).
 

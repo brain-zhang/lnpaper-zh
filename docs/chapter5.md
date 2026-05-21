@@ -9,7 +9,7 @@ Keys are generated using BIP 0032 Hierarchical Deterministic Wallets[17]. Keys a
 
 When all Day 2 private keys have been exchanged, for example by day 5, Alice discloses her Day 2 key. Bob is able to generate the Day 1 key from the Day 2 key, as the Day 1 key is a child of the Day 2 key as well.
 
-> 当交换了第1天的私钥时，例如在第5天，Alice 公布了她第2天的主密钥。Bob就能够从第2天的主密钥得到第1天的主密钥，因为第1天主密钥也是第2天的主密钥的子密钥。
+> 当所有第2天的私钥都已交换时，例如在第5天，Alice 公布了她第2天的主密钥。Bob就能够从第2天的主密钥得到第1天的主密钥，因为第1天主密钥也是第2天的主密钥的子密钥。
 
 If a counterparty broadcasts the wrong Commitment Transaction, which private key to use in a transaction to recover funds can either be brute forced, or if both parties agree, they can use the sequence id number when creating the transaction to identify which sets of keys are used.
 

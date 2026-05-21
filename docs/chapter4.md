@@ -231,7 +231,7 @@ To close out an HTLC, the process is as follows (from C2 to C3):
 
 > 2. Bob签署RD3a以及C3a并发送给Alice，以及用于C2和终止HTLC的私钥发送给Alice--即 KBobRSMC2, KBob5,  以及KBob8。此时，Bob应该只广播C3b而不是C2b，因为广播C2b的话，他会损失所有的资金。因此Bob应该完全撤销C2b和HTLC。Alice收到C3a后，也会愿意作废C2a。
 
-> 3. Alice签署RD3b以及C3b并发送给Bob，以及用于C2和终止HTLC的私钥发送给Bob--即KAliceRSMC2, KBob1, and KBob4。此时，任何一方都不应该广播C2，否则他们将丢失自己的资金。旧的承诺交易和旧的HTLC应该被撤销并完全终止。现在只应该保留新的C3，C3是不包含HTLC的。
+> 3. Alice签署RD3b以及C3b并发送给Bob，以及用于C2和终止HTLC的私钥发送给Bob--即KAliceRSMC2, KBob1, 和 KBob4。此时，任何一方都不应该广播C2，否则他们将丢失自己的资金。旧的承诺交易和旧的HTLC应该被撤销并完全终止。现在只应该保留新的C3，C3是不包含HTLC的。
 
 When the HTLC has been closed, the funds are updated so that the present balance in the channel is what would occur had the HTLC contract been completed and broadcast on the blockchain. Instead, both parties elect to do off-chain novation and update their payments inside the channel.
 
